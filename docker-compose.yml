@@ -8,9 +8,9 @@ services:
       dockerfile: Dockerfile
     tty: true
     ports:
-      - 8080:8080
+      - "8080:8080"
     env_file:
-      - ./mysql/.env
+      - ./db/mysql/.env
     depends_on:
       - db
     volumes:
@@ -23,32 +23,18 @@ services:
     tty: true
     platform: linux/x86_64
     ports:
-      - 3306:3306
+      - "3306:3306"
       # env_file:
       # - ./mysql/.env
     volumes:
       - mysql-volume:/var/lib/mysql
-      - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./db/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
     environment:
       MYSQL_USER: ${DB_USEDR:-root}
       MYSQL_PASSWORD: ${DB_PASSWORD:-p@ssw0rd}
       MYSQL_INITDB_ARGS: "--encoding=UTF-8"
       MYSQLDATA: /var/lib/mysql/data/mysqldata
       MYSQL_HOST_AUTH_METHOD: 'trust'
-
-  swagger-ui:
-    image: swaggerapi/swagger-ui
-    container_name: tech-syber-swagger
-    depends_on:
-      - api
-    environment:
-      - SWAGGER_URL=./swagger.yaml
-      - SWAGGER_JSON=/swagger/swagger.yaml
-    ports:
-      - 3030:3030
-    volumes:
-      - ./swagger/:/swagger
-
 volumes:
   mysql-volume:
     name: mysql-volume
