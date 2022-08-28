@@ -1,2 +1,4 @@
 mysql/.env
 .env
+# vscode環境についてきたので削除
+.vscode/
