@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"net/http"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
@@ -30,5 +31,9 @@ func (db *MySql) Open() (*sqlx.DB, error) {
 }
 
 func main() {
-
+	h1 := func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("helloworld"))
+	}
+	http.HandleFunc("/", h1)
+	http.ListenAndServe(":8080", nil)
 }
