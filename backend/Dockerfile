@@ -4,15 +4,6 @@ RUN apk update && \
     apk add bash git && \
     rm -rf /var/cache/apk/*
 
-RUN go install github.com/cespare/reflex@latest
-
-FROM golang:1.18-alpine
-COPY --from=build-reflex /go/bin/reflex /go/bin/reflex
-
-RUN apk update && \
-    apk upgrade && \
-    rm -rf /var/cache/apk/*
-
 ENV GOOS=linux \
     GOARCH=amd64 \
     CGO_ENABLED=0
