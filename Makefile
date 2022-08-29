@@ -1,9 +1,11 @@
-DOCKER_COMPOSE_IMPL=docker-compose
-
 .PHONY: dc/build
 dc/build:
-	$(DOCKER_COMPOSE_IMPL) build
+	docker-compose build
 
 .PHONY: dc/up
 dc/up:
-	$(DOCKER_COMPOSE_IMPL) up
+	docker-compose up
+
+.PHONY: dc/down-remove
+dc/down-remove:
+	docker-compose down --rmi all --volumes --remove-orphans
