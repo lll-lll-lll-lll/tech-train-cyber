@@ -34,15 +34,18 @@ services:
     platform: linux/x86_64
     ports:
       - "3306:3306"
-      # env_file:
-      # - ./mysql/.env
+    env_file:
+      - ./db/mysql/.env
     volumes:
       - ./db/initdb.d:/docker-entrypoint-initdb.d
       - mysql-volume:/var/lib/mysql
       - ./db/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
     environment:
-      MYSQL_USER: root
-      MYSQL_PASSWORD: ${DB_PASSWORD:-p@ssw0rd}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpass}
+      # 新規ユーザの作成とパスワードに使用
+      MYSQL_USER: "${MYSQL_USER:-user}"
+      MYSQL_PASSWORD: "${MYSQL_PASSWORD:-password}"
+      MYSQL_DATABASE: cyber-db
       MYSQL_INITDB_ARGS: "--encoding=UTF-8"
       MYSQLDATA: /var/lib/mysql/data/mysqldata
       MYSQL_HOST_AUTH_METHOD: 'trust'
