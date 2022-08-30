@@ -1,39 +1,20 @@
 package main
 
 import (
-	"fmt"
-	"net/http"
+	"log"
 
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/jmoiron/sqlx"
+	"github.com/tech-train-cyber/db"
 )
 
-type MySql struct {
-	datasource string
-}
-
-func NewMySql(datasource string) *MySql {
-	return &MySql{
-		datasource: datasource,
-	}
-}
-
-func (db *MySql) Open() (*sqlx.DB, error) {
-	dbcon, err := sqlx.Open("mysql", db.datasource)
-	defer dbcon.Close()
-	if err != nil {
-		return nil, fmt.Errorf("failed db init. %s", err)
-	}
-	if err := dbcon.Ping(); err != nil {
-		return nil, err
-	}
-	return dbcon, nil
-}
-
 func main() {
-	h1 := func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("helloworld"))
+	cs := "user:password@tcp(localhost:3306)/cyberdb?charset=utf8mb4"
+	md := db.NewMySql(cs)
+	db, err := md.Open()
+	defer db.Close()
+	if err != nil {
+		log.Fatal(err)
+		return
 	}
-	http.HandleFunc("/", h1)
-	http.ListenAndServe(":8080", nil)
+
 }
