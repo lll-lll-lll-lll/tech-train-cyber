@@ -24,6 +24,7 @@ func (db *MySql) Open() (*sqlx.DB, error) {
 		return nil, fmt.Errorf("failed db init. %s", err)
 	}
 	if err := dbcon.Ping(); err != nil {
+		log.Fatal("Failed to connect to MySQL database")
 		return nil, err
 	}
 	log.Println("DB Connect Successfully ")
