@@ -2,14 +2,21 @@ package main
 
 import (
 	"log"
+	"os"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/tech-train-cyber/db"
 )
 
 func main() {
-	cs := "user:password@tcp(localhost:3306)/cyberdb?charset=utf8mb4"
-	md := db.NewMySql(cs)
+	d := db.DBConfig{
+		User:     os.Getenv("MYSQL_USER"),
+		Password: os.Getenv("MYSQL_PASSWORD"),
+		Host:     os.Getenv("MYSQL_HOST"),
+		Port:     os.Getenv("MYSQL_PORT"),
+		DBName:   os.Getenv("MYSQL_DATABASE"),
+	}.String()
+	md := db.NewMySql(d)
 	db, err := md.Open()
 	defer db.Close()
 	if err != nil {
