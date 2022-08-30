@@ -31,6 +31,7 @@ func (s *Server) InitServer() error {
 	}.String()
 	md := db.NewMySql(d)
 	db, err := md.InitDB()
+	defer db.Close()
 	if err != nil {
 		log.Fatal(err)
 		return err

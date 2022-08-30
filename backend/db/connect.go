@@ -20,7 +20,6 @@ func NewMySql(datasource string) *MySql {
 
 func (md *MySql) InitDB() (*sqlx.DB, error) {
 	db, err := md.Open()
-	defer db.Close()
 	if err != nil {
 		return nil, err
 	}
