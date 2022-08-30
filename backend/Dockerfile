@@ -16,4 +16,4 @@ RUN go mod download
 
 COPY . .
 
-RUN go build -o /backend-api main.go
+RUN go build -o backend_api main.go
