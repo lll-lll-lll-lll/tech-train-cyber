@@ -16,3 +16,7 @@ dc/up:
 .PHONY: dc/down-remove
 dc/down-remove:
 	docker-compose down --rmi all --volumes --remove-orphans
+
+.PHONY: dc/re-build
+dc/re-build:
+	docker-compose down --rmi all --volumes --remove-orphans && docker-compose up
