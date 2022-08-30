@@ -17,11 +17,11 @@ func (dc DBConfig) String() string {
 	if dc.Password == "" {
 		dc.Password = "password"
 	}
-	if dc.Port == "" {
-		dc.Host = "3306"
-	}
 	if dc.Host == "" {
 		dc.Host = "localhost"
+	}
+	if dc.Port == "" {
+		dc.Port = "3306"
 	}
 	if dc.DBName == "" {
 		dc.DBName = "cyberdb"
