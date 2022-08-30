@@ -18,8 +18,17 @@ func NewMySql(datasource string) *MySql {
 	}
 }
 
-func (db *MySql) Open() (*sqlx.DB, error) {
-	dbcon, err := sqlx.Open("mysql", db.datasource)
+func (md *MySql) InitDB() (*sqlx.DB, error) {
+	db, err := md.Open()
+	defer db.Close()
+	if err != nil {
+		return nil, err
+	}
+	return db, nil
+}
+
+func (md *MySql) Open() (*sqlx.DB, error) {
+	dbcon, err := sqlx.Open("mysql", md.datasource)
 	if err != nil {
 		return nil, fmt.Errorf("failed db init. %s", err)
 	}
