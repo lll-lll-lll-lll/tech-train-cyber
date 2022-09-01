@@ -22,6 +22,7 @@ func NewServer() *Server {
 
 func (s *Server) InitServer() error {
 	r := InitRouter()
+
 	d := db.DBConfig{
 		User:     os.Getenv("MYSQL_USER"),
 		Password: os.Getenv("MYSQL_PASSWORD"),
@@ -29,6 +30,7 @@ func (s *Server) InitServer() error {
 		Port:     os.Getenv("MYSQL_PORT"),
 		DBName:   os.Getenv("MYSQL_DATABASE"),
 	}.String()
+
 	md := db.NewMySql(d)
 	db, err := md.InitDB()
 	defer db.Close()
@@ -36,8 +38,10 @@ func (s *Server) InitServer() error {
 		log.Fatal(err)
 		return err
 	}
+
 	s.db = db
 	s.router = r
+
 	return nil
 }
 
